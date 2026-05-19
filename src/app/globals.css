@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Host Grotesk Local";
+  src:
+    local("Host Grotesk Regular"),
+    url("/fonts/HostGrotesk-Regular.woff2") format("woff2"),
+    url("/fonts/HostGrotesk-Regular.woff") format("woff");
+  font-display: swap;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Host Grotesk Local";
+  src:
+    local("Host Grotesk SemiBold"),
+    url("/fonts/HostGrotesk-SemiBold.woff2") format("woff2"),
+    url("/fonts/HostGrotesk-SemiBold.woff") format("woff");
+  font-display: swap;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Cracker Grotesk Local";
+  src:
+    local("Cracker Grotesk"),
+    url("/fonts/CrackerGrotesk-Regular.woff2") format("woff2"),
+    url("/fonts/CrackerGrotesk-Regular.woff") format("woff");
+  font-display: swap;
+  font-weight: 400;
+}
+
+:root {
+  --color-ink: #0e0f0c;
+  --color-ink-soft: #454745;
+  --color-ink-muted: #868685;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f4f4f4;
+  --color-surface-soft: #fbfbfb;
+  --color-border: #e3e3e3;
+  --color-hero: #0a0a0a;
+  --color-hero-overlay: rgba(0, 0, 0, 0.52);
+  --font-sans:
+    "Host Grotesk Local", "Avenir Next", "Segoe UI", "Helvetica Neue",
+    sans-serif;
+  --font-display:
+    "Cracker Grotesk Local", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --page-gutter: clamp(1rem, 4vw, 3.75rem);
+  --section-space: clamp(5rem, 10vw, 7.5rem);
+  --content-max: 90rem;
+}
+
+@theme inline {
+  --color-background: var(--color-surface);
+  --color-foreground: var(--color-ink);
+  --font-sans: var(--font-sans);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.14);
+  color: inherit;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.headline-tight {
+  line-height: 0.84;
+}
+
+.hero-shadow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.36) 0%, rgba(0, 0, 0, 0.15) 38%, rgba(0, 0, 0, 0.58) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0) 52%);
+  pointer-events: none;
+}
+
+.footer-fade-text {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 12.79%, rgba(255, 255, 255, 0.1) 85.63%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
