@@ -9,7 +9,7 @@ export function Container({
   return (
     <div
       className={cn(
-        "mx-auto w-full max-w-[var(--content-max)] px-[var(--page-gutter)]",
+        "layout-container",
         className,
       )}
       {...props}

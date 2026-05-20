@@ -1,38 +1,60 @@
 "use client";
 
+import { Sparkle } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
 type HeroMarqueeProps = {
   text: string;
-  inverted?: boolean;
+  fontSize?: string;
 };
 
-export function HeroMarquee({ text, inverted = false }: HeroMarqueeProps) {
+function MarqueeContent({ text }: { text: string }) {
+  const items = Array.from({ length: 6 }, (_, index) => `${text}-${index}`);
+
+  return (
+    <>
+      {items.map((item) => (
+        <span key={item} className="inline-flex items-center gap-6 pr-6">
+          <span>{text}</span>
+          <Sparkle className="h-[0.32em] w-[0.32em] fill-current" strokeWidth={1.6} />
+        </span>
+      ))}
+    </>
+  );
+}
+
+export function HeroMarquee({
+  text,
+  fontSize = "13.35vw",
+}: HeroMarqueeProps) {
   const prefersReducedMotion = useReducedMotion();
-  const repeatedText = `${text} * ${text}`;
+  const marqueeStyle = {
+    fontSize,
+    lineHeight: "1",
+  } as const;
 
   if (prefersReducedMotion) {
     return (
       <div
-        className={`flex min-w-max gap-6 whitespace-nowrap text-[clamp(4rem,15vw,11.35rem)] tracking-[0.04em] text-white ${
-          inverted ? "justify-end" : ""
-        }`}
+        className="flex min-w-max whitespace-nowrap font-display tracking-[0.01em] text-white"
+        style={marqueeStyle}
       >
-        <span>{repeatedText}</span>
+        <MarqueeContent text={text} />
       </div>
     );
   }
 
   return (
-    <motion.div
-      animate={{ x: inverted ? [0, -120, 0] : [0, 120, 0] }}
-      transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-      className={`flex min-w-max gap-6 whitespace-nowrap text-[clamp(4rem,15vw,11.35rem)] tracking-[0.04em] text-white ${
-        inverted ? "justify-end" : ""
-      }`}
-    >
-      <span>{repeatedText}</span>
-      <span aria-hidden="true">{repeatedText}</span>
-    </motion.div>
+    <div className="overflow-hidden">
+      <motion.div
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+        className="flex min-w-max whitespace-nowrap font-display tracking-[0.01em] text-white will-change-transform"
+        style={marqueeStyle}
+      >
+        <MarqueeContent text={text} />
+        <MarqueeContent text={text} />
+      </motion.div>
+    </div>
   );
 }

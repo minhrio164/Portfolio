@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import { motion, useReducedMotion } from "framer-motion";
 
@@ -12,6 +12,7 @@ type RevealProps = {
   delay?: number;
   distance?: number;
   id?: string;
+  style?: CSSProperties;
 };
 
 export function Reveal({
@@ -20,12 +21,13 @@ export function Reveal({
   delay = 0,
   distance = 28,
   id,
+  style,
 }: RevealProps) {
   const prefersReducedMotion = useReducedMotion();
 
   if (prefersReducedMotion) {
     return (
-      <div className={className} id={id}>
+      <div className={className} id={id} style={style}>
         {children}
       </div>
     );
@@ -35,6 +37,7 @@ export function Reveal({
     <motion.div
       className={cn(className)}
       id={id}
+      style={style}
       initial={{ opacity: 0, y: distance }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.22 }}

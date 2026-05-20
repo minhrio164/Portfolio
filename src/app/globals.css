@@ -1,35 +1,5 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "Host Grotesk Local";
-  src:
-    local("Host Grotesk Regular"),
-    url("/fonts/HostGrotesk-Regular.woff2") format("woff2"),
-    url("/fonts/HostGrotesk-Regular.woff") format("woff");
-  font-display: swap;
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: "Host Grotesk Local";
-  src:
-    local("Host Grotesk SemiBold"),
-    url("/fonts/HostGrotesk-SemiBold.woff2") format("woff2"),
-    url("/fonts/HostGrotesk-SemiBold.woff") format("woff");
-  font-display: swap;
-  font-weight: 600;
-}
-
-@font-face {
-  font-family: "Cracker Grotesk Local";
-  src:
-    local("Cracker Grotesk"),
-    url("/fonts/CrackerGrotesk-Regular.woff2") format("woff2"),
-    url("/fonts/CrackerGrotesk-Regular.woff") format("woff");
-  font-display: swap;
-  font-weight: 400;
-}
-
 :root {
   --color-ink: #0e0f0c;
   --color-ink-soft: #454745;
@@ -41,13 +11,12 @@
   --color-hero: #0a0a0a;
   --color-hero-overlay: rgba(0, 0, 0, 0.52);
   --font-sans:
-    "Host Grotesk Local", "Avenir Next", "Segoe UI", "Helvetica Neue",
+    var(--font-host-grotesk), "Avenir Next", "Segoe UI", "Helvetica Neue",
     sans-serif;
   --font-display:
-    "Cracker Grotesk Local", "Arial Narrow", "Helvetica Neue", sans-serif;
-  --page-gutter: clamp(1rem, 4vw, 3.75rem);
+    var(--font-cracker-grotesk), "Arial Narrow", "Helvetica Neue", sans-serif;
+  --page-gutter: clamp(1.25rem, 4.1667vw, 3.75rem);
   --section-space: clamp(5rem, 10vw, 7.5rem);
-  --content-max: 90rem;
 }
 
 @theme inline {
@@ -117,4 +86,13 @@ img {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.layout-container {
+  width: 100%;
+  padding-inline: var(--page-gutter);
+}
+
+.section-space {
+  padding-block: var(--section-space);
 }

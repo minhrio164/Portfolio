@@ -1,14 +1,24 @@
 # Digital Thinker Portfolio
 
-Portfolio homepage built with `Next.js`, `Tailwind CSS`, and `Framer Motion`, based on the Figma homepage design at node `80:1157`.
+Portfolio site built with `Next.js`, `Tailwind CSS`, and `Framer Motion`, based on the Figma homepage design at node `80:1157` and the case study design at node `80:1147`.
 
 ## Current status
 
 - Homepage is implemented and split into reusable sections.
-- The current scope is homepage only.
-- Showcase pages are intentionally not built yet.
+- Homepage content is now centralized in a section-based data file.
+- A first case study route is implemented at `/work/a-sense`.
+- Homepage `View Showcase` links now route into the case study flow.
+- The case study page now has a sticky sidebar with working `active`, `default`, and `hover` states.
+- A dedicated `case study template plan` exists and the first scaffold is already in code.
 - The hero background asset has already been localized to `public/images/hero-waves.png`.
-- Typography is wired for local font files, but the real `Host Grotesk` and `Cracker Grotesk` files are still missing.
+- Typography now uses local `Host Grotesk` and `Cracker Grotesk` files via `next/font/local`.
+- Development-only tooling now includes `Agentation`.
+- The homepage CTA has an experimental `Liquid Metal Button` implementation inspired by Joly UI.
+- The case study live-project CTA now uses a matching `Liquid Metal` link button.
+- The shared site header is now unified across homepage and case study:
+  - logo on the left
+  - `Works` and `Experiences` on the right
+  - light/dark variants by page
 
 ## Stack
 
@@ -17,6 +27,8 @@ Portfolio homepage built with `Next.js`, `Tailwind CSS`, and `Framer Motion`, ba
 - Tailwind CSS v4
 - Framer Motion
 - Lucide React
+- Agentation
+- @paper-design/shaders
 
 ## Run locally
 
@@ -40,28 +52,50 @@ Both commands passed on this machine during implementation.
 
 - App entry: `src/app/page.tsx`
 - Global styles and font wiring: `src/app/globals.css`
+- Local font loader: `src/app/fonts.ts`
 - Homepage sections: `src/components/home`
 - Motion helpers: `src/components/motion`
 - UI primitives: `src/components/ui`
-- Homepage placeholder content: `src/content/homepage.ts`
+- Homepage content source: `src/content/homepage.ts`
+- Case study route: `src/app/work/[slug]/page.tsx`
+- Case study content source: `src/content/case-studies`
+- Case study sidebar component: `src/components/case-study/case-study-sidebar.tsx`
+- Case study screen plan: `CASE_STUDY_PLAN.md`
 - Localized hero asset: `public/images/hero-waves.png`
+- Sidebar arrow asset: `public/images/arrow-right-circle-sidebar.svg`
 
-## Fonts still needed
+## Fonts included
 
-Add these local files when available:
+The repo now includes:
 
-- `public/fonts/HostGrotesk-Regular.woff2`
-- `public/fonts/HostGrotesk-Regular.woff`
-- `public/fonts/HostGrotesk-SemiBold.woff2`
-- `public/fonts/HostGrotesk-SemiBold.woff`
+- `public/fonts/HostGrotesk-Regular.ttf`
+- `public/fonts/HostGrotesk-SemiBold.ttf`
+- `public/fonts/CrackerGrotesk-Regular.otf`
 - `public/fonts/CrackerGrotesk-Regular.woff2`
-- `public/fonts/CrackerGrotesk-Regular.woff`
 
-The site already has fallback fonts, so it runs without them, but visual fidelity to Figma will improve once they are added.
+These are wired through `src/app/fonts.ts` and used across the homepage.
+
+## Case study progress
+
+The first working sample is:
+
+- `/work/a-sense`
+
+Implemented pieces:
+
+- light case study header
+- large display title
+- overview + meta row
+- liquid-metal `Link to live Project` CTA
+- sticky sidebar
+- data-driven sections rendered from `src/content/case-studies`
+- placeholder image blocks for current layout exploration
+- footer reuse from the homepage system
 
 ## Notes for GitHub push
 
 - `node_modules` and `.next` are already ignored in `.gitignore`.
+- Local temporary cache folders like `.next-cache-*` and `.next-stale-font-cache` are now ignored too.
 - You can push this repo as-is to GitHub and continue on another machine with `npm install`.
 - The temporary default SVGs in `public/` are harmless, but not part of the real design.
 
