@@ -9,9 +9,9 @@ This repo currently contains the first implemented phase only:
 1. Static homepage
 2. Homepage-ready animation structure
 3. Ongoing homepage polish and hero experimentation
-4. First case study route and data model
+4. First real case study route with synced content and localized assets
 
-The internal showcase template is now partially implemented as a reusable route scaffold and is connected from the homepage.
+The internal showcase template is now implemented as a reusable route scaffold, connected from the homepage, and populated with the first production-facing VPBank case study content.
 
 ## Figma source
 
@@ -44,10 +44,12 @@ The homepage implementation was based on this Figma frame and adapted into a res
 - Homepage `View Showcase` links wired to the first case study route
 - First case study route at `src/app/work/[slug]/page.tsx`
 - Reusable case study content schema in `src/content/case-studies`
-- Sample case study data file: `src/content/case-studies/a-sense.ts`
+- Live case study data file: `src/content/case-studies/a-sense.ts`
 - Sticky case study sidebar with working `active`, `default`, and `hover` states
 - `LiquidMetalLinkButton` for the case study live-project CTA
 - Local sidebar arrow asset wired from `public/images/arrow-right-circle-sidebar.svg`
+- Homepage project card can now read linked title, overview, and preview image directly from the case study detail file
+- The first case study now uses localized real screenshots exported from Figma instead of gray placeholders
 
 ## Code structure
 
@@ -76,6 +78,7 @@ The homepage implementation was based on this Figma frame and adapted into a res
 
 - `public/images/hero-waves.png`
 - `public/images/arrow-right-circle-sidebar.svg`
+- `public/images/case-studies/*`
 
 This is the main hero background pulled from Figma and stored locally so the repo is portable.
 
@@ -111,15 +114,30 @@ These are wired through `src/app/fonts.ts`, so the homepage now renders through 
 - Replaced the case study live-project CTA with a liquid-metal link button
 - Added and wired the custom sidebar arrow SVG asset
 - Fixed local preview confusion by replacing the stale process on port `3000`
+- Synced `Port` case study content from Figma node `80:1147` into the codebase
+- Replaced placeholder case study visuals with localized VPBank screenshots in `public/images/case-studies`
+- Extended the case study content model with:
+  - `heroImageAlt`
+  - `imageCaptions`
+- Updated the detail page renderer to use real images and captions
+- Linked homepage featured project cards to case study detail data:
+  - preview image outside uses the case study hero image
+  - title outside uses the case study title
+  - description outside uses the case study overview
+- Refined case study interactions:
+  - sidebar arrow now tracks the real hovered/active item position
+  - image captions are centered and use the shared `18px / 144%` body treatment
+  - liquid-metal live-project CTA icon spacing tightened
+- Introduced `-v2` case study image filenames to force fresh asset pickup in the browser
 
 ## Next recommended step
 
 Continue polishing the case study screen against Figma:
 
-1. Tighten hero/meta spacing and proportions for the case study top area
-2. Polish the `Showcase Link` block styling
-3. Refine placeholder image block ratios and spacing to match the design more closely
-4. Continue adding more real case study content files once the template is visually stable
+1. Clean up unused non-`-v2` case study image duplicates in `public/images/case-studies`
+2. Continue aligning section order/content naming with the final Figma narrative
+3. Add more real case study content files once the first content model feels stable
+4. Consider extracting semantic typography utilities for repeated case study text styles
 
 ## Useful commands
 
