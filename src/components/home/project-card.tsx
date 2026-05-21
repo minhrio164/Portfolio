@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { Reveal } from "@/components/motion/reveal";
+import { getCaseStudyBySlug } from "@/content/case-studies";
 import type { ProjectCardContent } from "@/content/homepage";
 
 export function ProjectCard({
@@ -15,6 +17,15 @@ export function ProjectCard({
   delay?: number;
 }) {
   const prefersReducedMotion = useReducedMotion();
+  const caseStudy = project.showcaseSlug
+    ? getCaseStudyBySlug(project.showcaseSlug)
+    : undefined;
+  const href = project.showcaseSlug ? `/work/${project.showcaseSlug}` : "#";
+  const displayTitle = caseStudy?.title ?? project.title;
+  const displaySummary = caseStudy?.overviewText ?? project.summary;
+  const previewImage = caseStudy?.heroImage;
+  const previewImageAlt = caseStudy?.heroImageAlt ?? displayTitle;
+  const isLinked = href !== "#";
 
   return (
     <Reveal delay={delay} className="group">
@@ -24,21 +35,55 @@ export function ProjectCard({
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className="relative aspect-[1.24/1] overflow-hidden bg-[#f1f1f1] md:h-[430px] md:aspect-auto"
         >
-          <div className="absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.9),rgba(231,231,231,0.85))]" />
+          {isLinked ? (
+            <Link href={href} className="absolute inset-0 block">
+              {previewImage ? (
+                <Image
+                  src={previewImage}
+                  alt={previewImageAlt}
+                  fill
+                  sizes="(min-width: 1024px) 645px, 100vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.9),rgba(231,231,231,0.85))]" />
+              )}
+            </Link>
+          ) : (
+            <div className="absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.9),rgba(231,231,231,0.85))]" />
+          )}
         </motion.div>
 
         <div className="flex flex-col gap-6 md:gap-10">
           <div className="space-y-3 md:space-y-4">
             <h3 className="w-full text-[clamp(2rem,3vw,2.5rem)] font-semibold leading-none text-[var(--color-ink)]">
-              {project.title}
+              {isLinked ? (
+                <Link
+                  href={href}
+                  className="transition-colors hover:text-[var(--color-ink-soft)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-ink)]"
+                >
+                  {displayTitle}
+                </Link>
+              ) : (
+                displayTitle
+              )}
             </h3>
             <p className="max-w-[58ch] text-base leading-[1.44] tracking-[0.01em] text-[var(--color-ink-soft)] sm:text-lg">
-              {project.summary}
+              {isLinked ? (
+                <Link
+                  href={href}
+                  className="transition-colors hover:text-[var(--color-ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-ink)]"
+                >
+                  {displaySummary}
+                </Link>
+              ) : (
+                displaySummary
+              )}
             </p>
           </div>
 
           <Link
-            href={project.showcaseSlug ? `/work/${project.showcaseSlug}` : "#"}
+            href={href}
             className="inline-flex w-fit items-center gap-2 text-[var(--color-ink-soft)] transition hover:text-[var(--color-ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-ink)]"
           >
             <span

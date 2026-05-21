@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { CaseStudySidebar } from "@/components/case-study/case-study-sidebar";
@@ -31,7 +32,7 @@ export default async function CaseStudyPage({
         />
       </header>
 
-      <section className="layout-container flex flex-col gap-[3.75rem] py-8 md:py-10">
+      <section className="layout-container flex flex-col gap-[3.75rem] pt-8 pb-0 md:pt-10 md:pb-0">
         <h1 className="font-display text-[clamp(4.75rem,7.2vw,6rem)] leading-none tracking-[0]">
           {caseStudy.title}
         </h1>
@@ -74,6 +75,20 @@ export default async function CaseStudyPage({
               label={caseStudy.liveProjectLabel}
             />
           </div>
+
+          {caseStudy.heroImage ? (
+            <div className="relative h-[600px] w-full overflow-hidden rounded-[11px] bg-[#f3f3f3]">
+              <Image
+                src={caseStudy.heroImage}
+                alt={caseStudy.heroImageAlt ?? caseStudy.title}
+                fill
+                sizes="(min-width: 1440px) 1320px, calc(100vw - 120px)"
+                className="object-cover"
+              />
+            </div>
+          ) : (
+            <div className="h-[600px] w-full overflow-hidden rounded-[11px] bg-[#f3f3f3]" />
+          )}
         </div>
       </section>
 
@@ -88,7 +103,7 @@ export default async function CaseStudyPage({
         </aside>
 
         <div className="min-w-0 flex-1 space-y-[5.1875rem]">
-          {caseStudy.sections.map((section, index) => (
+          {caseStudy.sections.map((section) => (
             <section key={section.id} id={section.id} className="space-y-10">
               <div className="space-y-[1.4375rem]">
                 <h2 className="text-[40px] font-semibold leading-none">
@@ -101,18 +116,45 @@ export default async function CaseStudyPage({
                 </div>
               </div>
 
-              {index === 0 && (
-                <div className="h-[22rem] w-full rounded-[11px] bg-[#fafafa] md:h-[30.5rem]" />
+              {section.layout === "single-image" && section.images?.[0] && (
+                <div className="space-y-4">
+                  <div className="relative min-h-[22rem] w-full overflow-hidden rounded-[7px] bg-[#f3f3f3] md:min-h-[28.25rem]">
+                    <Image
+                      src={section.images[0]}
+                      alt={section.imageCaptions?.[0] ?? section.title}
+                      fill
+                      sizes="(min-width: 1440px) 1052px, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  {section.imageCaptions?.[0] && (
+                    <p className="text-center text-[18px] leading-[1.44] tracking-[0.18px] text-[var(--color-ink-soft)]">
+                      {section.imageCaptions[0]}
+                    </p>
+                  )}
+                </div>
               )}
 
-              {section.layout === "single-image" && (
-                <div className="aspect-[3200/1120] w-full rounded-[7px] bg-[#f3f3f3]" />
-              )}
-
-              {section.layout === "double-image" && (
+              {section.layout === "double-image" && section.images?.length && (
                 <div className="grid gap-10 md:grid-cols-2">
-                  <div className="aspect-[506/506] rounded-[8px] bg-[#f3f3f3]" />
-                  <div className="aspect-[506/506] rounded-[8px] bg-[#f3f3f3]" />
+                  {section.images.map((image, imageIndex) => (
+                    <div key={`${section.id}-${imageIndex}`} className="space-y-4">
+                      <div className="relative aspect-[506/548] overflow-hidden rounded-[8px] bg-[#f3f3f3]">
+                        <Image
+                          src={image}
+                          alt={section.imageCaptions?.[imageIndex] ?? `${section.title} ${imageIndex + 1}`}
+                          fill
+                          sizes="(min-width: 1440px) 506px, (min-width: 768px) calc((100vw - 220px) / 2), 100vw"
+                          className="object-cover"
+                        />
+                      </div>
+                      {section.imageCaptions?.[imageIndex] && (
+                        <p className="text-center text-[18px] leading-[1.44] tracking-[0.18px] text-[var(--color-ink-soft)]">
+                          {section.imageCaptions[imageIndex]}
+                        </p>
+                      )}
+                    </div>
+                  ))}
                 </div>
               )}
             </section>

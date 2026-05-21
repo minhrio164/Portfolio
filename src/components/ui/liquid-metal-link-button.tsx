@@ -176,7 +176,7 @@ export function LiquidMetalLinkButton({
           pointerEvents: "none",
           display: "inline-flex",
           alignItems: "center",
-          gap: "16px",
+          gap: "8px",
           fontSize: "22px",
           color: "#ffffff",
           fontWeight: 600,
@@ -235,7 +235,7 @@ export function LiquidMetalLinkButton({
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "16px",
+                gap: "8px",
                 fontSize: "22px",
                 color: "#ffffff",
                 fontWeight: 600,

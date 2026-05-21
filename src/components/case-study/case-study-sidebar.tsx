@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link2 } from "lucide-react";
 
 type SidebarItem = {
@@ -24,6 +24,25 @@ export function CaseStudySidebar({
 }: CaseStudySidebarProps) {
   const [activeId, setActiveId] = useState("");
   const [hoveredId, setHoveredId] = useState("");
+  const [indicatorTop, setIndicatorTop] = useState(0);
+  const listRef = useRef<HTMLDivElement | null>(null);
+  const itemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const visibleId = hoveredId || activeId || items[0]?.id || "";
+
+  const updateIndicator = (id: string) => {
+    const listElement = listRef.current;
+    const itemElement = itemRefs.current[id];
+
+    if (!listElement || !itemElement) {
+      return;
+    }
+
+    const listRect = listElement.getBoundingClientRect();
+    const itemRect = itemElement.getBoundingClientRect();
+    const nextTop = itemRect.top - listRect.top + itemRect.height / 2 - 12;
+
+    setIndicatorTop(nextTop);
+  };
 
   useEffect(() => {
     const sections = items
@@ -59,6 +78,9 @@ export function CaseStudySidebar({
         setActiveId((previous) =>
           previous === currentSection.id ? previous : currentSection.id,
         );
+        if (!hoveredId) {
+          updateIndicator(currentSection.id);
+        }
       }
     };
 
@@ -68,6 +90,9 @@ export function CaseStudySidebar({
 
       if (targetSection) {
         setActiveId(hashId);
+        if (!hoveredId) {
+          updateIndicator(hashId);
+        }
       }
     };
 
@@ -82,26 +107,43 @@ export function CaseStudySidebar({
       window.removeEventListener("resize", updateActiveSection);
       window.removeEventListener("hashchange", syncFromHash);
     };
-  }, [items]);
+  }, [hoveredId, items]);
+
+  useEffect(() => {
+    if (!visibleId) {
+      return;
+    }
+
+    const rafId = window.requestAnimationFrame(() => {
+      updateIndicator(visibleId);
+    });
+
+    return () => window.cancelAnimationFrame(rafId);
+  }, [activeId, hoveredId, items, visibleId]);
 
   return (
     <div className="space-y-4">
       <div className="rounded-[21px] border border-[#e6e6e6] bg-white p-6 shadow-[0px_4px_13px_0px_rgba(0,0,0,0.04)]">
-        <div className="mb-4 flex items-center gap-3">
-          <Image
-            src="/images/arrow-right-circle-sidebar.svg"
-            alt=""
-            width={24}
-            height={24}
+        <div
+          ref={listRef}
+          aria-label={summaryLabel}
+          className="relative space-y-4"
+        >
+          <span
             aria-hidden="true"
-            className="h-6 w-6"
-          />
-          <p className="text-[22px] font-semibold leading-[1.25] tracking-[-0.396px]">
-            {summaryLabel}
-          </p>
-        </div>
-
-        <div className="space-y-4 pl-9">
+            className={`pointer-events-none absolute left-0 transition-[transform,opacity] duration-300 ease-out ${
+              visibleId ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ transform: `translateY(${indicatorTop}px)` }}
+          >
+            <Image
+              src="/images/arrow-right-circle-sidebar.svg"
+              alt=""
+              width={24}
+              height={24}
+              className="h-6 w-6"
+            />
+          </span>
           {items.map((item) => {
             const isActive = item.id === activeId;
             const isHovered = item.id === hoveredId;
@@ -115,22 +157,36 @@ export function CaseStudySidebar({
               <button
                 key={item.id}
                 type="button"
+                ref={(element) => {
+                  itemRefs.current[item.id] = element;
+                }}
                 onClick={() => {
                   const targetSection = document.getElementById(item.id);
                   setActiveId(item.id);
+                  updateIndicator(item.id);
                   window.history.replaceState(null, "", `#${item.id}`);
                   targetSection?.scrollIntoView({
                     behavior: "smooth",
                     block: "start",
                   });
                 }}
-                onMouseEnter={() => setHoveredId(item.id)}
+                onMouseEnter={() => {
+                  setHoveredId(item.id);
+                  updateIndicator(item.id);
+                }}
                 onMouseLeave={() => setHoveredId("")}
-                onFocus={() => setHoveredId(item.id)}
+                onFocus={() => {
+                  setHoveredId(item.id);
+                  updateIndicator(item.id);
+                }}
                 onBlur={() => setHoveredId("")}
                 aria-current={isActive ? "true" : undefined}
-                className="block text-left text-[22px] font-semibold leading-[1.25] tracking-[-0.396px] transition-colors duration-200 focus-visible:outline-none"
-                style={{ color: itemColor }}
+                className="flex min-h-8 w-full items-center py-0.5 pl-9 text-left font-semibold tracking-[-0.396px] transition-colors duration-200 focus-visible:outline-none"
+                style={{
+                  color: itemColor,
+                  fontSize: "22px",
+                  lineHeight: "125%",
+                }}
               >
                 {item.label}
               </button>

@@ -6,6 +6,7 @@ export type CaseStudySection = {
   body: string[];
   layout?: CaseStudySectionLayout;
   images?: string[];
+  imageCaptions?: string[];
 };
 
 export type CaseStudyContent = {
@@ -18,6 +19,7 @@ export type CaseStudyContent = {
   liveProjectLabel: string;
   liveProjectUrl: string;
   heroImage?: string;
+  heroImageAlt?: string;
   sidebar: {
     summaryLabel: string;
     showcaseLinkLabel: string;
