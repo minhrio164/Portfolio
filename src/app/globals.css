@@ -96,3 +96,47 @@ img {
 .section-space {
   padding-block: var(--section-space);
 }
+
+.hero-liquid-shell {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 24% 32%, rgba(132, 141, 161, 0.05), transparent 34%),
+    radial-gradient(circle at 76% 44%, rgba(104, 115, 136, 0.05), transparent 30%),
+    #050608;
+}
+
+.hero-liquid-base {
+  background:
+    radial-gradient(circle at 24% 34%, rgba(150, 160, 182, 0.08), transparent 24%),
+    radial-gradient(circle at 68% 54%, rgba(255, 255, 255, 0.03), transparent 20%),
+    linear-gradient(180deg, rgba(5, 6, 8, 0.92) 0%, rgba(5, 6, 8, 0.56) 42%, rgba(5, 6, 8, 0.9) 100%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.hero-liquid-glow {
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.42;
+}
+
+.hero-liquid-glow-left {
+  background:
+    radial-gradient(circle at 18% 40%, rgba(255, 255, 255, 0.04), transparent 0 19%),
+    radial-gradient(circle at 28% 60%, rgba(144, 153, 171, 0.04), transparent 0 28%);
+  filter: blur(48px);
+}
+
+.hero-liquid-glow-right {
+  background:
+    radial-gradient(circle at 78% 36%, rgba(194, 200, 213, 0.05), transparent 0 17%),
+    radial-gradient(circle at 68% 68%, rgba(124, 135, 156, 0.04), transparent 0 24%);
+  filter: blur(58px);
+}
+
+.hero-liquid-vignette {
+  background:
+    radial-gradient(circle at center, transparent 34%, rgba(3, 4, 6, 0.34) 66%, rgba(2, 3, 5, 0.88) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.4) 0%, transparent 34%, transparent 70%, rgba(0, 0, 0, 0.38) 100%);
+  pointer-events: none;
+}

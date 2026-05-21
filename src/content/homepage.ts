@@ -44,7 +44,7 @@ export type HomePageContent = {
 export const homepageContent: HomePageContent = {
   hero: {
     brand: "Minh Pham",
-    intro: "I design product with purpose and meticulous attention to detail.",
+    intro: "Base on VietNam not Thread City",
     email: "lucaspham@gmail.com",
     ctaLabel: "Discover my works",
     marquee: "Product Portfolio",
