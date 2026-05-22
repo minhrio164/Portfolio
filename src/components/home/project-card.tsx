@@ -29,11 +29,11 @@ export function ProjectCard({
 
   return (
     <Reveal delay={delay} className="group">
-      <article className="flex h-full flex-col gap-8 md:gap-10">
+      <article className="flex h-full flex-col gap-7 md:gap-9 lg:gap-10">
         <motion.div
           whileHover={prefersReducedMotion ? undefined : { scale: 1.015 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="relative aspect-[1.24/1] overflow-hidden bg-[#f1f1f1] md:h-[430px] md:aspect-auto"
+          className="relative aspect-[1.08/1] overflow-hidden rounded-[10px] bg-[#f1f1f1] sm:aspect-[1.2/1] md:h-[430px] md:aspect-auto"
         >
           {isLinked ? (
             <Link href={href} className="absolute inset-0 block">
@@ -54,9 +54,9 @@ export function ProjectCard({
           )}
         </motion.div>
 
-        <div className="flex flex-col gap-6 md:gap-10">
+        <div className="flex flex-col gap-5 md:gap-8 lg:gap-10">
           <div className="space-y-3 md:space-y-4">
-            <h3 className="w-full text-[clamp(2rem,3vw,2.5rem)] font-semibold leading-none text-[var(--color-ink)]">
+            <h3 className="w-full text-[clamp(1.85rem,4vw,2.5rem)] font-semibold leading-[0.98] text-[var(--color-ink)]">
               {isLinked ? (
                 <Link
                   href={href}
@@ -68,7 +68,7 @@ export function ProjectCard({
                 displayTitle
               )}
             </h3>
-            <p className="max-w-[58ch] text-base leading-[1.44] tracking-[0.01em] text-[var(--color-ink-soft)] sm:text-lg">
+            <p className="max-w-[60ch] text-[15px] leading-[1.5] tracking-[0.01em] text-[var(--color-ink-soft)] sm:text-base md:text-lg md:leading-[1.44]">
               {isLinked ? (
                 <Link
                   href={href}
@@ -88,7 +88,7 @@ export function ProjectCard({
           >
             <span
               style={{
-                fontSize: "22px",
+                fontSize: "clamp(18px, 2.6vw, 22px)",
                 fontWeight: 600,
                 lineHeight: "1.25",
                 letterSpacing: "-0.396px",

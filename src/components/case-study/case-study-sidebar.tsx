@@ -123,7 +123,52 @@ export function CaseStudySidebar({
 
   return (
     <div className="space-y-4">
-      <div className="rounded-[21px] border border-[#e6e6e6] bg-white p-6 shadow-[0px_4px_13px_0px_rgba(0,0,0,0.04)]">
+      <div className="rounded-[18px] border border-[#e6e6e6] bg-white p-4 shadow-[0px_4px_13px_0px_rgba(0,0,0,0.04)] md:p-5 lg:hidden">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+          {summaryLabel}
+        </p>
+        <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {items.map((item) => {
+            const isActive = item.id === activeId;
+            const isHovered = item.id === hoveredId;
+            const itemColor = isActive
+              ? "var(--color-ink)"
+              : isHovered
+                ? "var(--color-ink-soft)"
+                : "#c6c6c6";
+
+            return (
+              <button
+                key={`mobile-${item.id}`}
+                type="button"
+                onClick={() => {
+                  const targetSection = document.getElementById(item.id);
+                  setActiveId(item.id);
+                  window.history.replaceState(null, "", `#${item.id}`);
+                  targetSection?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }}
+                onMouseEnter={() => setHoveredId(item.id)}
+                onMouseLeave={() => setHoveredId("")}
+                onFocus={() => setHoveredId(item.id)}
+                onBlur={() => setHoveredId("")}
+                aria-current={isActive ? "true" : undefined}
+                className="shrink-0 rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold leading-[1.2] tracking-[-0.02em] transition-colors duration-200"
+                style={{
+                  color: itemColor,
+                  backgroundColor: isActive ? "rgba(14,15,12,0.06)" : "#ffffff",
+                }}
+              >
+                {item.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="hidden rounded-[21px] border border-[#e6e6e6] bg-white p-6 shadow-[0px_4px_13px_0px_rgba(0,0,0,0.04)] lg:block">
         <div
           ref={listRef}
           aria-label={summaryLabel}
@@ -199,7 +244,7 @@ export function CaseStudySidebar({
         href={liveProjectUrl}
         target="_blank"
         rel="noreferrer"
-        className="flex w-full items-center gap-3 rounded-[16px] border border-[#e6e6e6] bg-white px-6 py-4 shadow-[0px_4px_13px_0px_rgba(0,0,0,0.04)]"
+        className="flex w-full items-center gap-3 rounded-[16px] border border-[#e6e6e6] bg-white px-5 py-4 shadow-[0px_4px_13px_0px_rgba(0,0,0,0.04)] md:px-6"
       >
         <Link2 className="h-5 w-5" strokeWidth={2.1} />
         <span className="text-[18px] font-semibold leading-none tracking-[-0.108px]">

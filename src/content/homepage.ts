@@ -5,8 +5,12 @@ export type ProjectCardContent = {
 };
 
 export type ExperienceEntry = {
-  year: string;
-  active?: boolean;
+  label: string;
+  role: string;
+  company: string;
+  duration: string;
+  dateRange: string;
+  description: string;
 };
 
 export type HomePageContent = {
@@ -25,12 +29,7 @@ export type HomePageContent = {
   };
   experience: {
     heading: string;
-    timeline: ExperienceEntry[];
-    role: string;
-    company: string;
-    duration: string;
-    dateRange: string;
-    description: string;
+    entries: ExperienceEntry[];
   };
   footer: {
     emailLabel: string;
@@ -79,17 +78,35 @@ export const homepageContent: HomePageContent = {
   },
   experience: {
     heading: "Experience",
-    timeline: [
-      { year: "2000-2001", active: true },
-      { year: "2000-2001" },
-      { year: "2000-2001" },
+    entries: [
+      {
+        label: "VPBank",
+        role: "Product Designer",
+        company: "VPBank",
+        duration: "3 Years 4 Months",
+        dateRange: "20/10/2024 - Present",
+        description:
+          "Led the redesign of major portal experiences, helping structure information architecture, define reusable UI patterns, and improve cross-team collaboration between product, marketing, and engineering.",
+      },
+      {
+        label: "Vietinbank",
+        role: "Senior Product Designer",
+        company: "Vietinbank",
+        duration: "2 Years 1 Month",
+        dateRange: "01/08/2022 - 30/09/2024",
+        description:
+          "Worked on digital banking flows focused on trust, clarity, and service discoverability, while building stronger design consistency across multiple customer-facing journeys.",
+      },
+      {
+        label: "Starack",
+        role: "Product Designer",
+        company: "Starack",
+        duration: "1 Year 8 Months",
+        dateRange: "01/01/2021 - 31/07/2022",
+        description:
+          "Designed product experiences for fast-moving internal and client-facing initiatives, with a focus on rapid iteration, scalable interface systems, and clear UX communication.",
+      },
     ],
-    role: "Lorem Ipsum",
-    company: "Company",
-    duration: "3 Years 4 Months",
-    dateRange: "20/10/2024 - 20/10/202",
-    description:
-      "I spearheaded the development of innovative solutions, driving a 30% increase in user engagement and a 15% reduction in customer churn.",
   },
   footer: {
     emailLabel: "Reach this Project ;",
